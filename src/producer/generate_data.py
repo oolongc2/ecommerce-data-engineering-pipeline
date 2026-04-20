@@ -46,6 +46,22 @@ cur.execute("""
             );
             """)
 
+cur.execute("""
+            DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.table_constraints
+                    WHERE constraint_name = 'unique_product_name'
+                    AND table_name = 'products'
+                ) THEN
+                    ALTER TABLE products
+                    ADD CONSTRAINT unique_product_name UNIQUE (product_name);
+                END IF;
+            END $$;
+            """
+            )
+
 # Seed Initial Data
 def seed_data():
     # insert users:
@@ -65,7 +81,8 @@ def seed_data():
     ]
     for p in products:
         cur.execute(
-                    "INSERT INTO PRODUCTS (product_name, price) VALUES (%s, %s)",
+                    "INSERT INTO PRODUCTS (product_name, price) VALUES (%s, %s)" \
+                    "ON CONFLICT (product_name) DO NOTHING",
                     p
                     )
 
