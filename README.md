@@ -1,15 +1,15 @@
 # ecommerce-data-engineering-pipeline
 🚀 Real-time E-commerce Data Engineering Pipeline
 
-📌 Overview
+## 📌 Project Overview
 This small project demonstrates a real-time data pipeline using some modern and popular Data Engineering tools.
 
 The system simulates an e-commerce environment where users continuously place orders, and the data flow through a complete pipeline from ingestion to analytics and visualization.
 
-🏗️ Architechture
+## 🏗️ Architechture
 PostgreSQL → Debezium → Kafka → Python Consumer → MinIO (Data Lake) → Airflow → dbt → Data Warehouse → Dashboard
 
-⚙️ Technologies
+## ⚙️ Technologies
 - Python – Data generation & processing
 - PostgreSQL – Source database
 - Debezium – Change Data Capture (CDC)
@@ -18,7 +18,77 @@ PostgreSQL → Debezium → Kafka → Python Consumer → MinIO (Data Lake) → 
 - Apache Airflow – Workflow orchestration
 - dbt – Data transformation
 
-🔄 Data Flow
+## 📋 Prerequisites
+Before you begin, ensure you have met the following requirements:
+* [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running.
+* Windows PowerShell (for running the setup scripts).
+* A SQL client like pgAdmin4 (optional, for manual database inspection).
+
+---
+
+## 🏃‍♂️ How to Run the Project
+
+### Step 1: Start the Docker Infrastructure
+Start all necessary services (PostgreSQL, Zookeeper, Kafka, Kafka Connect) in detached mode:
+```powershell
+docker-compose up -d
+```
+
+### Step 2: Initialize the Postgres Connector
+Open PowerShell and run the following script to configure and create the Debezium Postgres Connector via the Kafka Connect REST API:
+```powershell
+$body = @{
+  name = "postgres-connector"
+  config = @{
+    "connector.class" = "io.debezium.connector.postgresql.PostgresConnector"
+    "database.hostname" = "host.docker.internal"
+    "database.port" = "5432"
+    "database.user" = "postgres"
+    "database.password" = "123456"
+    "database.dbname" = "ecommerce_db"
+    "database.server.name" = "dbserver1"
+    "plugin.name" = "pgoutput"
+    "table.include.list" = "public.products"
+    "topic.prefix" = "dbserver1"
+  }
+} | ConvertTo-Json -Depth 5
+
+Invoke-RestMethod -Uri "http://localhost:8083/connectors" `
+-Method Post `
+-ContentType "application/json" `
+-Body $body
+```
+
+### Step 3: Verify Connector Status
+```powershell
+Invoke-RestMethod http://localhost:8083/connectors/postgres-connector/status
+```
+(Optional) If you encounter an error or need to update the configuration, you can delete the connector using:
+```powershell
+Invoke-RestMethod -Uri http://localhost:8083/connectors/postgres-connector -Method Delete
+```
+
+### Step 4: Verify Kafka Topics
+Check if Debezium has successfully automatically created the topic for the products table. Run this command to list all topics in Kafka:
+```powershell
+docker exec -it kafka kafka-topics --bootstrap-server localhost:9092 --list
+```
+
+### Step 5: Consume Real-time Data
+```powershell
+docker exec -it kafka kafka-console-consumer `
+--bootstrap-server localhost:9092 `
+--topic dbserver1.public.products `
+--from-beginning
+```
+
+### 🧹 Teardown
+To stop the pipeline and remove the containers, networks, and volumes (this will wipe the database data), run:
+```
+docker-compose down -v
+```
+
+## 🔄 Data Flow
 1. Python script generates real-time orders
 2. PostgreSQL stores transactional data
 3. Debezium captures changes (CDC)
@@ -29,7 +99,7 @@ PostgreSQL → Debezium → Kafka → Python Consumer → MinIO (Data Lake) → 
 8. dbt transforms data into analytics tables
 9. Dashboard visualizes insights
 
-📊 Use Cases
+## 📊 Use Cases
 - E-commerce analytics
 - Real-time dashboards
 - Data warehousing pipelines
