@@ -10,9 +10,7 @@ from minio import Minio
 # ===================
 KAFKA_BROKER = 'localhost:9092'
 KAFKA_TOPICS = [
-    'dbserver1.public.products',
-    'dbserver1.public.orders',
-    'dbserver1.public.users'
+    'dbserver1.public.products'
 ]
 MINIO_ENDPOINT = 'localhost:9000'
 MINIO_ACCESS_KEY = 'minioadmin' # Replace with your MinIO access key
@@ -22,9 +20,7 @@ BATCH_SIZE = 1000
 
 # Initialize buffer for temporary data storage
 data_buffers = {
-    'products': [],
-    'orders': [],
-    'users': []
+    'products': []
 }
 
 # ===================
@@ -41,13 +37,24 @@ minio_client = Minio(
 # Initialize Kafka Consumer
 conf = {
     'bootstrap.servers': KAFKA_BROKER,
-    'group.id': 'ecommerce_data_lake_group',
+    'group.id': 'rebuild_1',
     'auto.offset.reset': 'earliest',
     'enable.auto.commit': False # Disable auto-commit to manage offsets manually
 }
 
 consumer = Consumer(conf)
 consumer.subscribe(KAFKA_TOPICS)
+
+# bucket = "bronze-zone"
+
+# Uncomment the following lines if you want to clean up existing data in the bucket before running the consumer
+# Delete all objects in the bucket
+# objects = minio_client.list_objects(bucket, recursive=True)
+# for obj in objects:
+#    minio_client.remove_object(bucket, obj.object_name)
+
+# Delete bucket
+# minio_client.remove_bucket(bucket)
 
 # ===================
 # 3. Processing Functions and Update Data
