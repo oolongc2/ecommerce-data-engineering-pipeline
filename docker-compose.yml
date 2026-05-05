@@ -67,6 +67,24 @@ services:
       - minio_data:/data
     command: server /data --console-address ":9001"
 
+  airflow:
+    image: apache/airflow:2.8.1
+    container_name: airflow
+    restart: always
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - _PIP_ADDITIONAL_REQUIREMENTS=minio pandas
+    volumes:
+      - ./dags:/opt/airflow/dags
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "
+      airflow db migrate &&
+      airflow users create --username admin --password admin --firstname admin --lastname admin --role Admin --email admin@example.com || true &&
+      airflow scheduler & airflow webserver
+      "
+
 volumes:
   minio_data:
 
