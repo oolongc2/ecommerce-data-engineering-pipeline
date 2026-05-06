@@ -147,6 +147,50 @@ python kafka_to_minio_consumer.py
 
 Go back to MinIO Web UI to see a folder: products/ . Inside it, Parquet files: *.parquet
 
+## 🔄 Apache Airflow Setup (Workflow Orchestration)
+
+This section describes how to set up **Apache Airflow** to orchestrate data pipelines in the project.
+
+Airflow is used to:
+- Schedule and monitor workflows (DAGs)
+- Automate data ingestion and processing tasks
+- Manage dependencies between different pipeline stages
+
+---
+
+### 🚀 1. Install Required Dependencies
+
+To enable integration with cloud/object storage services (such as MinIO via S3 API), install the Amazon provider package:
+
+```bash
+pip install apache-airflow-providers-amazon
+```
+
+### 🐳 2. Start Airflow with Docker
+
+Make sure your Docker environment is up and running.
+
+### 🌐 3. Access Airflow Web UI
+
+Once the services are running, open the Airflow web interface in your browser:
+
+```bash
+http://localhost:8080
+```
+
+You can also verify that the webserver is running using:
+
+```bash
+curl http://localhost:8080
+```
+
+### 🔐 4. Login to Airflow
+
+```bash
+Username: admin
+Password: admin
+```
+
 ## 🔄 Data Flow
 1. Python script generates real-time orders
 2. PostgreSQL stores transactional data
