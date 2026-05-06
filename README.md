@@ -88,6 +88,65 @@ To stop the pipeline and remove the containers, networks, and volumes (this will
 docker-compose down -v
 ```
 
+## 📦 MinIO Setup (Data Lake - Bronze Layer)
+
+This section describes how to set up **MinIO** as object storage and stream data from Kafka into a Bronze layer in Parquet format.
+
+---
+
+### 🚀 1. Create Consumer Script
+
+First, create a Python script to consume data from Kafka and push it to MinIO:
+
+```bash
+kafka_to_minio_consumer.py
+```
+
+### 🌐 2. Access MinIO Web UI
+
+Open the MinIO Console in your browser:
+
+```bash
+http://localhost:9001
+```
+
+### 🪣 3. Create Bucket (Bronze Layer)
+
+MinIO uses buckets to organize data (similar to folders in a filesystem).
+
+Create a bucket named: bronze-zone
+
+### 📚 4. Install Required Python Libraries
+
+Install the necessary dependencies:
+
+```bash
+pip install confluent-kafka pandas pyarrow minio
+```
+
+### 🔍 5. Verify Kafka Data
+
+Before consuming data into MinIO, verify that Kafka is producing data correctly:
+
+```bash
+docker exec -it kafka kafka-console-consumer \
+--bootstrap-server localhost:9092 \
+--topic dbserver1.public.products \
+--from-beginning
+```
+
+### ▶️ 6. Run the Consumer Script
+
+Execute the Python script to start ingesting data into MinIO
+
+```bash
+python kafka_to_minio_consumer.py
+```
+
+### ✅ 7. Validate Data in MinIO
+
+Go back to MinIO Web UI to see a folder: products/ . Inside it, Parquet files: *.parquet
+
 ## 🔄 Data Flow
 1. Python script generates real-time orders
 2. PostgreSQL stores transactional data
