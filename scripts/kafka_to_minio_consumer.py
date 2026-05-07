@@ -10,7 +10,9 @@ from minio import Minio
 # ===================
 KAFKA_BROKER = 'localhost:9092'
 KAFKA_TOPICS = [
-    'dbserver1.public.products'
+    'dbserver1.public.products',
+    'dbserver1.public.users',
+    'dbserver1.public.orders'
 ]
 MINIO_ENDPOINT = 'localhost:9000'
 MINIO_ACCESS_KEY = 'minioadmin' # Replace with your MinIO access key
@@ -20,7 +22,9 @@ BATCH_SIZE = 1000
 
 # Initialize buffer for temporary data storage
 data_buffers = {
-    'products': []
+    'products': [],
+    'users': [],
+    'orders': []
 }
 
 # ===================

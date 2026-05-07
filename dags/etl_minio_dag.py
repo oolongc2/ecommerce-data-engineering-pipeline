@@ -13,9 +13,22 @@ def process_data():
     )
 
     # Read file from bronze-zone MinIO bucket
-    obj = client.get_object("bronze-zone", "products_20260504_192848_628904.parquet")
+    # List all objects in bronze-zone bucket (products, users, orders)
+    objects = client.list_objects("bronze-zone", recursive=True)
 
-    df = pd.read_parquet(obj)
+    for obj in objects:
+        print("Found:", obj.object_name)
+        
+        if obj.object_name.endswith(".parquet"):
+
+            df = pd.read_parquet(client.get_object("bronze-zone", obj.object_name))
+
+            content = df.read()
+
+            print(f"Loaded: {obj.object_name}")
+            print(f"Size: {len(content)} bytes")
+
+            break
 
     # Process data (example: drop rows with missing values)
     df = df.dropna()
