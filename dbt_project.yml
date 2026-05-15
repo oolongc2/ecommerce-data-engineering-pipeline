@@ -1,0 +1,15 @@
+name: 'ecommerce-data-engineering-pipeline'
+version: '1.0'
+config-version: 2
+
+profile: 'ecommerce-data-engineering-pipeline-profile'
+
+model-paths: ["models"]
+
+models:
+    ecommerce-data-engineering-pipeline:
+        staging:
+            +materialized: view
+            
+        marts:
+            +materialized: table
