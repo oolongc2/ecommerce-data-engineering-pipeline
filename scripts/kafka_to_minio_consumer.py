@@ -41,7 +41,7 @@ minio_client = Minio(
 # Initialize Kafka Consumer
 conf = {
     'bootstrap.servers': KAFKA_BROKER,
-    'group.id': 'rebuild_1',
+    'group.id': 'rebuild_2', # Change this to a unique group ID for your consumer (each consumer group will have its own offset tracking)
     'auto.offset.reset': 'earliest',
     'enable.auto.commit': False # Disable auto-commit to manage offsets manually
 }
