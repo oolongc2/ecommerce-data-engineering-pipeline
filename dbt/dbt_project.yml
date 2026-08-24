@@ -1,0 +1,15 @@
+name: 'ecommerce_data_engineering_pipeline' # using _ instead of - to avoid issues with dbt project name
+version: '1.0'
+config-version: 2
+
+profile: 'ecommerce_data_engineering_pipeline_profile' # using _ instead of - to avoid issues with dbt profile name
+
+model-paths: ["models"]
+
+models:
+    ecommerce-data-engineering-pipeline:
+        staging:
+            +materialized: view
+            
+        marts:
+            +materialized: table
