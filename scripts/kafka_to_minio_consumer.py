@@ -49,6 +49,9 @@ conf = {
 consumer = Consumer(conf)
 consumer.subscribe(KAFKA_TOPICS)
 
+if not minio_client.bucket_exists("bronze-zone"):
+    minio_client.make_bucket("bronze-zone")
+
 # bucket = "bronze-zone"
 
 # Uncomment the following lines if you want to clean up existing data in the bucket before running the consumer
