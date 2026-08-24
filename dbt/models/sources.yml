@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: ecommerce_raw
+    description: "Raw data replicated from PostgreSQL via Debezium/Kafka"
+    tables:
+      - name: users
+        description: "Raw users data ingested from MinIO into Snowflake RAW layer"
+      - name: products
+        description: "Raw products data ingested from MinIO into Snowflake RAW layer"
+      - name: orders
+        description: "Raw orders data ingested from MinIO into Snowflake RAW layer"
