@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('ecommerce_raw', 'products') }}
+    select * from {{ source('public', 'products') }} -- match with the schema name in your database pgAdmin4
 ),
 
 renamed as (

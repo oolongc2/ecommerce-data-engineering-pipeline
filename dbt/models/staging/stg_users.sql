@@ -1,6 +1,6 @@
 with source as (
-    select * from {{ source('ecommerce_raw', 'users') }}
-)
+    select * from {{ source('public', 'users') }} -- match with the schema name in your database pgAdmin4
+), -- attention to comma
 
 renamed as (
     select
