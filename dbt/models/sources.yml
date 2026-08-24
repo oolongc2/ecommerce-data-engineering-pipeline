@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: ecommerce_raw
+  - name: public # match with the schema name in your database pgAdmin4 PostgreSQL
     description: "Raw data replicated from PostgreSQL via Debezium/Kafka"
     tables:
       - name: users
