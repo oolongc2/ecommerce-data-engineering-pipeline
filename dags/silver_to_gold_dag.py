@@ -34,19 +34,22 @@ def build_gold_layer():
         return pd.read_parquet(data)
 
     # Load parquet files into tables to handle data
+    # Need to change name of the parquet file to match the actual file in silver-zone
     users_df = load_parquet(
         "silver-zone",
-        "clean_users_20260507_091636_201362.parquet"
+        "clean_users_20260824_200148_979453.parquet"
     )
 
+    # Need to change name of the parquet file to match the actual file in silver-zone
     products_df = load_parquet(
         "silver-zone",
-        "clean_products_20260504_192848_628904.parquet"
+        "clean_products_20260824_195735_172676.parquet"
     )
 
+    # Need to change name of the parquet file to match the actual file in silver-zone
     orders_df = load_parquet(
         "silver-zone",
-        "clean_orders_20260507_091636_254508.parquet"
+        "clean_orders_20260824_200149_144823.parquet"
     )
 
     # -----------------------------
@@ -154,7 +157,7 @@ def build_gold_layer():
 with DAG(
     dag_id="silver_to_gold",
     start_date=datetime(2024, 1, 1),
-    schedule_interval="@daily",
+    # schedule_interval="@daily", # Remove this parameter because of unexpected keyword argument error
     catchup=False
 ) as dag:
 
