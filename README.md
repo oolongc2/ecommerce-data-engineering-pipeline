@@ -48,7 +48,7 @@ $body = @{
     "database.dbname" = "ecommerce_db"
     "database.server.name" = "dbserver1"
     "plugin.name" = "pgoutput"
-    "table.include.list" = "public.products"
+    "table.include.list" = "public.products,public.orders,public.users"
     "topic.prefix" = "dbserver1"
   }
 } | ConvertTo-Json -Depth 5
