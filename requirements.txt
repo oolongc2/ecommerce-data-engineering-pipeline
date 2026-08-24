@@ -1,0 +1,13 @@
+#src/producer
+psycopg2
+faker
+
+# scripts
+Consumer
+kafka-python
+minio
+fastparquet
+pandas
+
+#dbt
+dbt
