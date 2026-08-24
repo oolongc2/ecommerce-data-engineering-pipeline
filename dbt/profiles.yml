@@ -1,0 +1,14 @@
+ecommerce_data_engineering_pipeline_profile: # using _ instead of - to avoid issues with dbt profile name
+  target: dev
+  
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: '123456' # String, not a number
+      port: 5432
+      dbname: ecommerce_db # match with the database name in your PostgreSQL
+      schema: analytics
+      threads: 4
+      
