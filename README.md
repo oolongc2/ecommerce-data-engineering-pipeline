@@ -1,5 +1,18 @@
-# ecommerce-data-engineering-pipeline
+<img width="1481" height="878" alt="image" src="https://github.com/user-attachments/assets/2dc8abe6-5262-4223-906c-ddaa1c4fa1cc" /># ecommerce-data-engineering-pipeline
 🚀 Real-time E-commerce Data Engineering Pipeline
+
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Debezium](https://img.shields.io/badge/Debezium-EF3B2D?logo=apache&logoColor=white)
+![MinIO](https://img.shields.io/badge/MinIO-C72E49?logo=minio&logoColor=white)
+![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-231F20?logo=apachekafka&logoColor=white)
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?logo=apacheairflow&logoColor=white)
+![DBT](https://img.shields.io/badge/dbt-FF694B?logo=dbt&logoColor=white)
+![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?logo=snowflake&logoColor=white)
+
+**Technologies:** Python · Docker · Debezium · MinIO · Kafka · Airflow ·  dbt · Snowflake ·
+
+---
 
 ## 📌 Project Overview
 This small project demonstrates a real-time data pipeline using some modern and popular Data Engineering tools.
