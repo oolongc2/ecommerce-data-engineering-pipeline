@@ -1,0 +1,49 @@
+# models/staging/schema.yml
+
+version: 2
+
+models:
+  - name: stg_users
+    description: "Staging view for user records loaded from RAW layer"
+    columns: 
+      - name: user_id
+        tests:
+          - unique
+          - not_null
+      - name: email
+        tests:
+          - not_null
+          - unique
+  
+  - name: stg_products
+    description: "Staging view for product records loaded from RAW layer"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+      - name: price
+        tests:
+          - not_null
+  
+  - name: stg_orders
+    description: "Staging view for order records loaded from RAW layer"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        description: "Foreign key linking to the users table"
+        tests:
+          - not_null
+          - relationships:
+            to: ref('stg_users')
+            field: user_id
+      - name: product_id
+        description: "Foreign key linking to the products table"
+        tests:
+          - not_null
+          - relationships:
+            to: ref('stg_products')
+            field: product_id
