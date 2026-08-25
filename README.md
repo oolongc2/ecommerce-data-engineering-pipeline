@@ -1,4 +1,4 @@
-<img width="1481" height="878" alt="image" src="https://github.com/user-attachments/assets/2dc8abe6-5262-4223-906c-ddaa1c4fa1cc" /># ecommerce-data-engineering-pipeline
+# ecommerce-data-engineering-pipeline
 🚀 Real-time E-commerce Data Engineering Pipeline
 
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
